@@ -1,0 +1,118 @@
+:root {
+  --bg-color: #ffffff;
+  --text-color: #212529;
+
+  --navbar-bg: #212529;
+  --navbar-text: #f8f9fa;
+
+  --surface-bg: #ffffff;
+  --surface-border: #dee2e6;
+
+  --input-bg: #ffffff;
+  --input-border: #dee2e6;
+  --input-placeholder: #6c757d;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+#root {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+}
+
+/* 🌙 Dark mode */
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f8f9fa;
+
+  --navbar-bg: #000000;
+  --navbar-text: #f8f9fa;
+
+  --surface-bg: #1f1f1f;
+  --surface-border: #444;
+
+  --input-bg: #1f1f1f;
+  --input-border: #495057;
+  --input-placeholder: #adb5bd;
+}
+
+/* Elements adapting to theme */
+.navbar-dark.bg-dark {
+  background-color: var(--navbar-bg) !important;
+}
+
+.navbar-dark .navbar-brand,
+.navbar-dark .nav-link,
+.navbar-dark .navbar-text {
+  color: var(--navbar-text) !important;
+}
+
+.card,
+.modal-content,
+.dropdown-menu,
+.list-group-item {
+  background-color: var(--surface-bg);
+  color: var(--text-color);
+  border-color: var(--surface-border);
+}
+
+.form-control,
+.form-select {
+  background-color: var(--input-bg);
+  color: var(--text-color);
+  border-color: var(--input-border);
+}
+
+.form-control::placeholder {
+  color: var(--input-placeholder);
+}
+
+.table {
+  color: var(--text-color);
+}
+
+.table thead {
+  background-color: var(--navbar-bg);
+}
+
+/* Buttons */
+.btn-outline-success {
+  color: #20c997;
+  border-color: #20c997;
+}
+
+.btn-outline-success:hover {
+  background-color: #20c997;
+  color: #000;
+}
+
+/* Layout */
+.app-content,
+main {
+  padding-top: 4.5rem;
+}
+
+#languageDropdown + .dropdown-menu img {
+  width: 18px;
+  height: 18px;
+  object-fit: cover;
+  margin-right: 6px;
+}
