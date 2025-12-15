@@ -9,28 +9,44 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
       - uses: actions/cache@v4
         with:
           path: ~/.npm
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
       - run: npm ci
+
       - run: npm test
+        continue-on-error: false
+
+      # If npm test fails, show logs
+      - name: Print npm debug log if test failed
+        if: failure()
+        run: |
+          echo "---- NPM DEBUG LOG ----"
+          find ~/.npm/_logs -type f -name "*.log" -exec cat {} \; || echo "No npm logs found"
+          echo "-----------------------"
 
   publish-npm:
     needs: build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://registry.npmjs.org/
+
       - run: npm ci
+
       - name: Verify version consistency
         run: |
           PACKAGE_VERSION=$(node -p "require('./package.json').version")
@@ -39,6 +55,16 @@ jobs:
             echo "Version mismatch! package.json=$PACKAGE_VERSION release=$RELEASE_VERSION"
             exit 1
           fi
-      - run: npm publish
+
+      - name: Publish to npm
+        run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+
+      #Debug block — shows npm logs if publish fails
+      - name: Print npm debug log if publish failed
+        if: failure()
+        run: |
+          echo "---- NPM DEBUG LOG ----"
+          find ~/.npm/_logs -type f -name "*.log" -exec cat {} \; || echo "No npm logs found"
+          echo "-----------------------"
